@@ -6,6 +6,8 @@ public class Calculadora {
 
    public String comecar() {
       String input = scanner.nextLine();
+
+      // Validez de caracteres •> "Etapa I: Análise Léxica"
       if (input == null || input.isBlank()) {
          return comecar();
       }
@@ -13,6 +15,10 @@ public class Calculadora {
          System.out.println("Fórmula \"" + input + "\" contém caracteres inválidos, tente novamente");
          return comecar();
       }
+
+      // TODO Validez de sintaxe •> "Etapa II: Analizador Sintático"
+      // TODO Cálculo tautológico •> "Etapa III: Provador de Tautologia"
+
       return "Calculadora - Fim";
    }
 
@@ -37,5 +43,5 @@ public class Calculadora {
          j++;
       }
       return true;
-   }
+   } // "Análise Léxica"
 }
