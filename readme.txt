@@ -1,4 +1,6 @@
-• Calculadora matemática lógica em CLI
+Projeto de IDEA Intellij
+
+Calculadora matemática lógica em CLI
 
 Etapa I: Análise Léxica
     1. Determinar símbolos usados para:
