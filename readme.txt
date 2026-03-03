@@ -1,8 +1,5 @@
-• Calculadora lógica em CLI
+• Calculadora matemática lógica em CLI
 
-• Apresentação em 17/03
-
-//
 Etapa I: Análise Léxica
     1. Determinar símbolos usados para:
         • Negação: ¬, ~ (símbolo de negação, acento til/tilde)
