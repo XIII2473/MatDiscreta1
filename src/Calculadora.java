@@ -11,10 +11,16 @@ public class Calculadora {
       if (input == null || input.isBlank()) {
          return comecar();
       }
+
       if (!checkChars(input)) {
          System.out.println("Fórmula \"" + input + "\" contém caracteres inválidos, tente novamente");
          return comecar();
       }
+      if (!checkSintaxe(input)) {
+         System.out.println("Símbolo inválido, tente novamente");
+         return comecar();
+      }
+
 
       // TODO Validez de sintaxe •> "Etapa II: Analizador Sintático"
       // TODO Cálculo tautológico •> "Etapa III: Provador de Tautologia"
@@ -44,4 +50,52 @@ public class Calculadora {
       }
       return true;
    } // "Análise Léxica"
+   private boolean checkSintaxe(String input) {
+
+      boolean esperaOperando = true;
+      int parenteses = 0;
+
+      for (int i = 0; i < input.length(); i++) {
+
+         char c = input.charAt(i);
+
+         if (esperaOperando) {
+
+            if (Character.isUpperCase(c)) {
+               esperaOperando = false;
+            }
+
+            else if (c == '(') {
+               parenteses++;
+            }
+
+            else if (c == '¬') {
+               continue;
+            }
+
+            else {
+               return false;
+            }
+
+         } else {
+
+            if (c == '^' || c == 'v' || c == '>' || c == '~') {
+               esperaOperando = true;
+            }
+
+            else if (c == ')') {
+               parenteses--;
+               if (parenteses < 0) return false;
+            }
+
+            else {
+               return false;
+            }
+         }
+      }
+
+      return !esperaOperando && parenteses == 0;
+   }
 }
+
+
