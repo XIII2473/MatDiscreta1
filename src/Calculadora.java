@@ -34,7 +34,7 @@ public class Calculadora {
       return "# Calculadora - Fim";
    }
 
-   private boolean checkChars(String input) {
+   private boolean checkChars(String input) { // checa se há caracteres não aceitos
       int i = 0;
       for (int j = 0; j < charWhitelist.length(); ) {
          if (input.charAt(i) == charWhitelist.charAt(j)) {
@@ -53,7 +53,7 @@ public class Calculadora {
       return true;
    } // "Análise Léxica"
 
-   private boolean checkSintaxe(String input) {
+   private boolean checkSintaxe(String input) { // checa sintaxe
 
       boolean esperaOperando = true;
       int parenteses = 0;
@@ -88,7 +88,7 @@ public class Calculadora {
       return !esperaOperando && parenteses == 0;
    } // "Análise Sintática"
 
-   private boolean tautologico(String input) {
+   private boolean tautologico(String input) { // se é tautológico
       input = input.replaceAll("\\s", "").replaceAll("¬", "~"); //padronização
 
       List<Character> operadores = new ArrayList<Character>();
@@ -137,7 +137,9 @@ public class Calculadora {
       return false;
    } // "Provador Tautológico"
 
-   private String toPostfix(String infix) {
+
+   // métodos pra mudar a ordem dos caracteres pra facilitar a verificação
+   private String toPostfix(String infix) { 
       StringBuilder postfix = new StringBuilder();
       java.util.Stack<Character> stackParenteses = new java.util.Stack<>();
 
