@@ -1,7 +1,10 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Calculadora {
-   private final String charWhitelist = "ABCDEFGHIJKLMNOPQRSTUVWXYZv¬~^v<>()";
+   private final String charWhitelist = "ABCDEFGHIJKLMNOPQRSTUVWXYZv¬~^v=>() ";
    private final Scanner scanner = new Scanner(System.in);
 
    public String comecar() {
@@ -11,7 +14,6 @@ public class Calculadora {
       if (input == null || input.isBlank()) {
          return comecar();
       }
-
       if (!checkChars(input)) {
          System.out.println();
          System.out.println("Fórmula \"" + input + "\" contém caracteres inválidos, tente novamente");
@@ -19,11 +21,13 @@ public class Calculadora {
       }
       // "Etapa II: Análise Sintática"
       if (!checkSintaxe(input)) {
-         System.out.println("Símbolo inválido, tente novamente");
+         System.out.println("Fórmula \"" + input + "\" contém sintaxe inválida, tente novamente");
          return comecar();
       }
 
       // TODO Cálculo tautológico •> "Etapa III: Provador de Tautologia"
+      tautologico(input);
+
       return "Calculadora - Fim";
    }
 
@@ -52,25 +56,23 @@ public class Calculadora {
       int parenteses = 0;
 
       for (int i = 0; i < input.length(); i++) {
-
          char c = input.charAt(i);
 
+         if (c == ' ') {
+            continue;
+         }
          if (esperaOperando) {
-
             if (Character.isUpperCase(c)) {
                esperaOperando = false;
             } else if (c == '(') {
                parenteses++;
-            } else if (c == '¬' || c == '~') {
+            } else if (c == '¬' || c == '~') { //vai pro próx carac do input se for
             } else {
                return false;
             }
-
          } else {
-
-            if (c == '^' || c == 'v' ||  c == '>' || c == '~' || c == '¬') {
+            if (c == '^' || c == 'v' || c == '=' || c == '>' || c == '~' || c == '¬') {
                esperaOperando = true;
-            } else if (c == '<') {
             } else if (c == ')') {
                parenteses--;
                if (parenteses < 0) return false;
@@ -81,7 +83,20 @@ public class Calculadora {
       }
 
       return !esperaOperando && parenteses == 0;
-   } // Análise Sintática
+   } // "Análise Sintática"
+
+   private boolean tautologico(String input) {
+      input = input.replaceAll("\\s","").replaceAll("¬", "~"); //padronização
+
+      List<Character> vals = new ArrayList<Character>();
+
+      for (int i = 0; i < input.length(); i++) {
+         char c = input.charAt(i);
+         if (Character.isUpperCase(c) && !vals.contains(c)) {
+            vals.add(c); //guarda as letras usadas na fórmula
+         }
+      }
+
+      return false;
+   } // "Provador Tautológico"
 }
-
-

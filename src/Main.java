@@ -5,7 +5,7 @@ void main() {
            "^ para Conjunção (Acento Circumflexo)\n" +
            "v para Disjunção (Letra 'v' Minúscula)\n" +
            "> para Condicional (Sinal 'maior que')\n" +
-           "<> para Bi-Condicional (Sinais 'menor que' e 'maior que' juntos)\n");
+           "= para Bi-Condicional (Sinal 'igual')\n");
    Calculadora c = new Calculadora();
    System.out.println("Digite sua Fórmula: ");
    System.out.println(c.comecar());
