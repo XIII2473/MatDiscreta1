@@ -13,43 +13,39 @@ public class Calculadora {
       }
 
       if (!checkChars(input)) {
+         System.out.println();
          System.out.println("Fórmula \"" + input + "\" contém caracteres inválidos, tente novamente");
          return comecar();
       }
+      // "Etapa II: Análise Sintática"
       if (!checkSintaxe(input)) {
          System.out.println("Símbolo inválido, tente novamente");
          return comecar();
       }
 
-
-      // TODO Validez de sintaxe •> "Etapa II: Analizador Sintático"
       // TODO Cálculo tautológico •> "Etapa III: Provador de Tautologia"
-
       return "Calculadora - Fim";
    }
 
    private boolean checkChars(String input) {
       int i = 0;
       for (int j = 0; j < charWhitelist.length(); ) {
-//         System.out.println("⛧for loop (i⋅" + i + " ⋅ j⋅" + j + ") ⋅ char \"" + input.charAt(i) + "\" ⋅ charWhitelist \"" + charWhitelist.charAt(j) + "\"");
          if (input.charAt(i) == charWhitelist.charAt(j)) {
-//            System.out.println("★SUCCESS | char \"" + input.charAt(i) + "\" i = " + i + " | charWhitelist \"" + charWhitelist.charAt(j) + "\" j = " + j);
             j = 0;
             i++;
             if (i == input.length()) {
                break;
             }
-//            System.out.println(" flush");
             continue;
          }
          if (j == charWhitelist.length() - 1) {
-//            System.out.println("ERROR | char \"" + input.charAt(i) + "\" i = " + i);
             return false;
          }
          j++;
       }
       return true;
    } // "Análise Léxica"
+
    private boolean checkSintaxe(String input) {
 
       boolean esperaOperando = true;
@@ -63,39 +59,29 @@ public class Calculadora {
 
             if (Character.isUpperCase(c)) {
                esperaOperando = false;
-            }
-
-            else if (c == '(') {
+            } else if (c == '(') {
                parenteses++;
-            }
-
-            else if (c == '¬') {
-               continue;
-            }
-
-            else {
+            } else if (c == '¬' || c == '~') {
+            } else {
                return false;
             }
 
          } else {
 
-            if (c == '^' || c == 'v' || c == '>' || c == '~') {
+            if (c == '^' || c == 'v' ||  c == '>' || c == '~' || c == '¬') {
                esperaOperando = true;
-            }
-
-            else if (c == ')') {
+            } else if (c == '<') {
+            } else if (c == ')') {
                parenteses--;
                if (parenteses < 0) return false;
-            }
-
-            else {
+            } else {
                return false;
             }
          }
       }
 
       return !esperaOperando && parenteses == 0;
-   }
+   } // Análise Sintática
 }
 
 
